@@ -17,6 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Built plt
-      run: ./dialyzer --build_plt --aps erts kernel stdlib mnesia
+      run: dialyzer --build_plt --aps erts kernel stdlib mnesia
     - name: Matrix
       run: ./matrix
