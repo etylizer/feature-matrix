@@ -7,7 +7,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    shell: bash
     strategy: 
       matrix:
         erlang: [ 23,24 ]
@@ -20,4 +19,4 @@ jobs:
     - name: Built plt
       run: dialyzer --build_plt --apps erts kernel stdlib mnesia
     - name: Matrix
-      run: ./matrix
+      run: bash matrix
