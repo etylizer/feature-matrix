@@ -92,7 +92,7 @@ function eqwalizer {
 }
 
 
-allModules=(gradualizer)
+allModules=(cdialyzer gradualizer ety)
 #allModules=(cdialyzer gradualizer eqwalizer ety)
 
 echo ---
