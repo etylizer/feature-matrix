@@ -44,7 +44,7 @@ function ety {
 }
 
 # PLT needs to be built before
-# ./dialyzer --build_plt --aps erts kernel stdlib mnesia
+# ./dialyzer --build_plt --apps erts kernel stdlib mnesia
 #./dialyzer --src path/somefile.erl
 function dialyzer {
   dialyzer --src $1 > /dev/null
