@@ -47,7 +47,7 @@ function ety {
 # ./dialyzer --build_plt --aps erts kernel stdlib mnesia
 #./dialyzer --src path/somefile.erl
 function dialyzer {
-  ./dialyzer --src $1 > /dev/null
+  dialyzer --src $1 > /dev/null
   R2=$?
   if [ $R2 = 2 ]; then
     R2=1
