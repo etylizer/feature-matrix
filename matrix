@@ -1,0 +1,110 @@
+#/bin/bash
+
+shopt -s nullglob
+
+# time limit and memory limit
+function limitrun {
+  timeout 10s systemd-run --scope -p MemoryMax=1024M --user $@
+}
+
+function result {
+  R=$2
+  if [ $1 -eq 0 ]; then
+    echo "[O] $R" 
+  elif [ $1 -eq 1 ]; then
+    echo "[X] $R" 
+  else
+    echo "[!] $R"
+  fi
+}
+
+function fail {
+  R=$2
+  if [ $1 -eq 0 ]; then
+    echo "[X] $R"
+  elif [ $1 -eq 1 ]; then
+    echo "[O] $R" 
+  else
+    echo "[!] $R"
+  fi
+}
+
+function exception {
+  echo "[!] $1"
+}
+
+function ety {
+  limitrun ./ety $1 1> /dev/null 2> /dev/null
+  R2=$?
+  if [ $2 = "fail" ]; then
+    fail $R2 $1
+  else
+    result $R2 $1
+  fi
+}
+
+# PLT needs to be built before
+# ./dialyzer --build_plt --aps erts kernel stdlib mnesia
+#./dialyzer --src path/somefile.erl
+function dialyzer {
+  ./dialyzer --src $1 > /dev/null
+  R2=$?
+  if [ $R2 = 2 ]; then
+    R2=1
+  fi
+  if [ $2 = "fail" ]; then
+    fail $R2 $1
+  else
+    result $R2 $1
+  fi
+}
+
+function gradualizer {
+  ./gradualizer $1 > /dev/null
+  R=$?
+  if [ $2 = "fail" ]; then
+    fail $R $1
+  else
+    result $R $1
+  fi
+}
+
+function eqwalizer {
+  # strange exit code conventions
+  F=`basename $1`
+  F2=${F%.*}
+  T=$(mktemp)
+  Out=$(./elp eqwalize $F2 2> $T)
+  if (echo "$Out" | grep -vq "Exception"); then
+    if (echo "$Out" | grep -q "NO ERRORS"); then
+      R=0
+    else
+      R=1
+    fi
+    if [ $3=="fail" ]; then
+      fail $R $1
+    else
+      result $R $1
+    fi
+  else
+    exception $1
+  fi
+}
+
+
+allModules=(dialyzer gradualizer eqwalizer ety)
+
+echo ---
+echo Testing features: ${allModules[@]}
+echo ---
+
+for checker_under_test in ${allModules[@]}; do
+  for test_case in src/fail/*.erl ; do
+    $checker_under_test $test_case fail
+  done
+
+  for d in src/pass/*.erl ; do
+    $checker_under_test $test_case pass
+  done
+done
+

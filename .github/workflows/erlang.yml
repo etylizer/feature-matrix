@@ -1,0 +1,22 @@
+name: Erlang CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy: 
+      matrix:
+        erlang: [ 23,24 ]
+
+    container:
+      image: erlang:${{ matrix.erlang }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Built plt
+      run: ./dialyzer --build_plt --aps erts kernel stdlib mnesia
+    - name: Matrix
+      run: ./matrix
