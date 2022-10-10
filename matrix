@@ -46,7 +46,7 @@ function ety {
 # PLT needs to be built before
 # ./dialyzer --build_plt --apps erts kernel stdlib mnesia
 #./dialyzer --src path/somefile.erl
-function dialyzer {
+function cdialyzer {
   dialyzer --src $1 > /dev/null
   R2=$?
   if [ $R2 = 2 ]; then
@@ -92,19 +92,21 @@ function eqwalizer {
 }
 
 
-allModules=(dialyzer gradualizer eqwalizer ety)
+allModules=(cdialyzer gradualizer ety)
+#allModules=(cdialyzer gradualizer eqwalizer ety)
 
 echo ---
 echo Testing features: ${allModules[@]}
 echo ---
 
-for checker_under_test in ${allModules[@]}; do
-  for test_case in src/fail/*.erl ; do
-    $checker_under_test $test_case fail
+for checkerundertest in ${allModules[@]}; do
+  echo $checkerundertest
+  for testcase in src/fail/*.erl ; do
+    "$checkerundertest" "$testcase" fail
   done
 
-  for d in src/pass/*.erl ; do
-    $checker_under_test $test_case pass
+  for testcase in src/pass/*.erl ; do
+    $checkerundertest $testcase pass
   done
 done
 
