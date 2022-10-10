@@ -7,12 +7,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy: 
-      matrix:
-        erlang: [ 23,24 ]
 
     container:
-      image: erlang:${{ matrix.erlang }}
+      image: erlang
 
     steps:
     - uses: actions/checkout@v2
