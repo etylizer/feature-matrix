@@ -1,4 +1,4 @@
--module(case_2).
+-module(case_1).
 -compile(export_all).
 -compile(nowarn_export_all).
 
