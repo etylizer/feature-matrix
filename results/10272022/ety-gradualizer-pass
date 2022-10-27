@@ -45,7 +45,7 @@
 [T] gradualizer-src/pass/list_exhaustiveness_checking_regressions2.erl
 [T] gradualizer-src/pass/list_exhaustiveness_checking_regressions.erl
 [O] gradualizer-src/pass/list_exhaustiveness_checking_unreachable_clause_regression.erl
-[X] gradualizer-src/pass/list_infer_pass.erl
+[T] gradualizer-src/pass/list_infer_pass.erl
 [X] gradualizer-src/pass/list_op_should_pass.erl
 [X] gradualizer-src/pass/listsspecs.erl
 [O] gradualizer-src/pass/list_tail.erl

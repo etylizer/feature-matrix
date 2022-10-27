@@ -60,7 +60,7 @@
 [X] gradualizer-src/fail/match.erl
 [X] gradualizer-src/fail/messaging_fail.erl
 [O] gradualizer-src/fail/named_fun_fail.erl
-[O] gradualizer-src/fail/named_fun_infer_fail.erl
+[T] gradualizer-src/fail/named_fun_infer_fail.erl
 [!] gradualizer-src/fail/nil.erl
 [O] gradualizer-src/fail/no_idempotent_xor.erl
 [!] gradualizer-src/fail/nonempty_list_match_in_head_nonexhaustive.erl

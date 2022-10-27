@@ -1,4 +1,4 @@
-[M] ety-src/pass2/check_if.erl
+[T] ety-src/pass2/check_if.erl
 [O] ety-src/pass2/concat.erl
 [T] ety-src/pass2/filtermap.erl
 [!] ety-src/pass2/flatten.erl
@@ -48,7 +48,7 @@
 [O] ety-src/pass/fun_03.erl
 [O] ety-src/pass/fun_05.erl
 [O] ety-src/pass/fun_local_01.erl
-[O] ety-src/pass/fun_local_02.erl
+[T] ety-src/pass/fun_local_02.erl
 [T] ety-src/pass/fun_local_03.erl
 [T] ety-src/pass/fun_local_04.erl
 [O] ety-src/pass/fun_ref_01.erl

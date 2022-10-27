@@ -2,6 +2,9 @@
 
 shopt -s nullglob
 
+# can't use -Wno_contracts to ignore overlapping domains
+DIALYZER_OPTS=" -Wno_improper_lists"
+
 # time limit and memory limit
 function limitrun {
   timeout 2s systemd-run --scope -p MemoryMax=1024M --user $@
@@ -55,12 +58,15 @@ function ety {
 # ./dialyzer --build_plt --apps erts kernel stdlib mnesia
 #./dialyzer --src path/somefile.erl
 function cdialyzer {
-  dialyzer --src $1 > /dev/null
+  dialyzer $DIALYZER_OPTS --src $1 > /dev/null
   R2=$?
-  # 2 is only warning
-  #if [ $R2 = 2 ]; then
-  #  R2=1
-  #fi
+  # 2 is the error basically
+  # 1 something else is wrong
+  if [ $R2 = 2 ]; then
+    R2=1
+  elif [ $R2 = 1 ]; then
+    R2=2
+  fi
   if [ $2 = "fail" ]; then
     fail $R2 $1
   else
