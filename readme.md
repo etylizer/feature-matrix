@@ -10,7 +10,7 @@ The tools currently included are:
 
 The test suites currently included are:
 
-* Gradualizer
+* [Gradualizer](https://github.com/josefs/Gradualizer)
 * Etylizer
 
 

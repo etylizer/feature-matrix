@@ -110,29 +110,26 @@ function eqwalizer {
 #allModules=(cdialyzer gradualizer eqwalizer ety)
 allModules=(cdialyzer gradualizer ety)
 
+testSuites=(ety gradualizer)
+
 echo ---
 echo Testing features: ${allModules[@]}
 echo ---
 
 for checkerundertest in ${allModules[@]}; do
   echo $checkerundertest
-  # TODO generic test suites
-  for testcase in ety-src/fail*/*.erl ; do
-    "$checkerundertest" "$testcase" fail >> "$checkerundertest-ety-fail"
-    tail -1 "$checkerundertest-ety-fail"
-  done
-  for testcase in gradualizer-src/fail*/*.erl ; do
-    "$checkerundertest" "$testcase" fail >> "$checkerundertest-gradualizer-fail"
-    tail -1 "$checkerundertest-gradualizer-fail"
+  for suite in ${testSuites[@]}; do
+    for testcase in $suite-src/fail*/*.erl ; do
+      "$checkerundertest" "$testcase" fail >> "$checkerundertest-$suite-fail"
+      tail -1 "$checkerundertest-$suite-fail"
+    done
   done
 
-  for testcase in ety-src/pass*/*.erl ; do
-    $checkerundertest $testcase pass >> "$checkerundertest-ety-pass"
-    tail -1 "$checkerundertest-ety-pass"
-  done
-  for testcase in gradualizer-src/pass*/*.erl ; do
-    $checkerundertest $testcase pass >> "$checkerundertest-gradualizer-pass"
-    tail -1 "$checkerundertest-gradualizer-pass"
+  for suite in ${testSuites[@]}; do
+    for testcase in $suite-src/pass*/*.erl ; do
+      $checkerundertest $testcase pass >> "$checkerundertest-$suite-pass"
+      tail -1 "$checkerundertest-$suite-pass"
+    done
   done
 done
 
