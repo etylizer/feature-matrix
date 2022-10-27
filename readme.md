@@ -46,9 +46,19 @@ The test suite is currently run with the following limitations
 * memory limit of 1Gb (enforced with `systemd-run`)
 * time limit of 10s per module (enforced with `timeout`)
 
+# Problems
+
+* Dialyzer complains about ignoring overlapping domains and ignores them.
+  This causes an exit code 2 error; Dialyzer did not detect the
+  error, but we count those test cases as `passed`. Disabling contracts causes
+  dialyzer to ignore all contracts, not only those with overlapping domains. We
+  would need a flag that stops emitting warnings (code 2) if dialyzer did
+  **not** do or check something, like ignoring overlapping domains.
+
 
 # Interesting discussions
 
 * https://github.com/josefs/Gradualizer/issues/433
 * https://github.com/josefs/Gradualizer/issues/405
 * https://github.com/erlang/otp/issues/6333
+* ... todo many threads

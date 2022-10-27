@@ -18,7 +18,7 @@ h(V) -> V.
 i(V, U) -> {V, U}.
 
 -spec j({a, b} | {d, e}) -> {a, b} | {d, e}.
-j({V, U}) -> i(V,aU).
+j({V, U}) -> i(V, U).
 
 %% Currently the function is checked against each part of the
 %% intersection spec one by one and fails with an error "The [second]
