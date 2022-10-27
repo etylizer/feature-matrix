@@ -22,15 +22,14 @@ Roadmap:
 # Result Meaning
 
 * `[O]`: Test case has expected result; 
-  * test with type error detects the type error (exit code 1)
+  * test with type error detects the type error (exit code 1; error code 2 for dialyzer)
   * test without type error detects nothing (exit code 0)
 * `[X]`: Test case has unexpected result; 
   * test with type error detects no type error (exit code 0)
-  * test without type error detects a type error (exit code 1)
+  * test without type error detects a type error (exit code 1; error code 2 for dialyzer)
 * `[M]`: Test case crashed; Memory (code 137)
 * `[T]`: Test case crashed; Time (code 124)
 * `[!]`: Unknown error code (code ?)
-  * dialyzer warnings (code 2) count currently as unknown
 
 
 
