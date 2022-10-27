@@ -1,0 +1,26 @@
+start:
+  - f: ListFiles
+    file: pass
+    filename: name
+    streamTarget: pmodule
+
+pmodule:
+  - f: readfile
+    inputFile: "pass/{name}"
+    output: content
+  - f: StringReplace
+    replace: "-module\\((.*)\\).(.*)"
+    with: |
+      -module($1).
+      -compile(export_all).
+      -compile(nowarn_export_all).
+
+      $2
+    content: "{content}"
+    output: new
+  - f: WriteLineToFile
+    output: "pass/{name}"
+    line: "{new}"
+    overwrite: true
+
+

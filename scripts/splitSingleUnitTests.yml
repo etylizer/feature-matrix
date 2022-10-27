@@ -1,0 +1,23 @@
+start:
+  - f: readfile
+    inputFile: pass
+  - f: stringsplit
+    regex: "\\n\\n"
+  - f: map
+    putElement: single
+  - f: log
+  - f: Regex
+    regex: "-spec (.*?)\\("
+    groups:
+      module: 1
+    content: "{single}"
+    output: module
+  - f: log
+    log: "{[module^0]@module}"
+  - f: WriteLineToFile
+    output: "{[module^0]@module}.erl"
+    line: |
+      -module({[module^0]@module}).
+
+      {single}
+    overwrite: true

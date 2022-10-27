@@ -4,7 +4,7 @@ shopt -s nullglob
 
 # time limit and memory limit
 function limitrun {
-  timeout 10s systemd-run --scope -p MemoryMax=1024M --user $@
+  timeout 2s systemd-run --scope -p MemoryMax=1024M --user $@
 }
 
 function result {
@@ -13,8 +13,12 @@ function result {
     echo "[O] $R" 
   elif [ $1 -eq 1 ]; then
     echo "[X] $R" 
+  elif [ $1 -eq 137 ]; then
+    echo "[M] $R" 
+  elif [ $1 -eq 124 ]; then
+    echo "[T] $R" 
   else
-    echo "[!] $R"
+    echo "[!] $R" 
   fi
 }
 
@@ -24,6 +28,10 @@ function fail {
     echo "[X] $R"
   elif [ $1 -eq 1 ]; then
     echo "[O] $R" 
+  elif [ $1 -eq 137 ]; then
+    echo "[M] $R" 
+  elif [ $1 -eq 124 ]; then
+    echo "[T] $R" 
   else
     echo "[!] $R"
   fi
@@ -49,9 +57,10 @@ function ety {
 function cdialyzer {
   dialyzer --src $1 > /dev/null
   R2=$?
-  if [ $R2 = 2 ]; then
-    R2=1
-  fi
+  # 2 is only warning
+  #if [ $R2 = 2 ]; then
+  #  R2=1
+  #fi
   if [ $2 = "fail" ]; then
     fail $R2 $1
   else
@@ -60,7 +69,7 @@ function cdialyzer {
 }
 
 function gradualizer {
-  ./gradualizer $1 > /dev/null
+  ./gradualizer $1 > /dev/null 2> /dev/null
   R=$?
   if [ $2 = "fail" ]; then
     fail $R $1
@@ -92,8 +101,8 @@ function eqwalizer {
 }
 
 
-allModules=(cdialyzer gradualizer eqwalizer ety)
 #allModules=(cdialyzer gradualizer eqwalizer ety)
+allModules=(cdialyzer gradualizer ety)
 
 echo ---
 echo Testing features: ${allModules[@]}
@@ -101,12 +110,23 @@ echo ---
 
 for checkerundertest in ${allModules[@]}; do
   echo $checkerundertest
-  for testcase in src/fail/*.erl ; do
-    "$checkerundertest" "$testcase" fail
+  # TODO generic test suites
+  for testcase in ety-src/fail*/*.erl ; do
+    "$checkerundertest" "$testcase" fail >> "$checkerundertest-ety-fail"
+    tail -1 "$checkerundertest-ety-fail"
+  done
+  for testcase in gradualizer-src/fail*/*.erl ; do
+    "$checkerundertest" "$testcase" fail >> "$checkerundertest-gradualizer-fail"
+    tail -1 "$checkerundertest-gradualizer-fail"
   done
 
-  for testcase in src/pass/*.erl ; do
-    $checkerundertest $testcase pass
+  for testcase in ety-src/pass*/*.erl ; do
+    $checkerundertest $testcase pass >> "$checkerundertest-ety-pass"
+    tail -1 "$checkerundertest-ety-pass"
+  done
+  for testcase in gradualizer-src/pass*/*.erl ; do
+    $checkerundertest $testcase pass >> "$checkerundertest-gradualizer-pass"
+    tail -1 "$checkerundertest-gradualizer-pass"
   done
 done
 

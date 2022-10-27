@@ -6,8 +6,32 @@ The tools currently included are:
 
 * Dialyzer
 * Gradualizer
-* Eqwalizer
 * Etylizer
+
+The test suites currently included are:
+
+* Gradualizer
+* Etylizer
+
+
+Roadmap:
+
+* [ ] Eqwalizer
+* [ ] Eqwalizer test cases
+
+# Result Meaning
+
+* `[O]`: Test case has expected result; 
+  * test with type error detects the type error (exit code 1)
+  * test without type error detects nothing (exit code 0)
+* `[X]`: Test case has unexpected result; 
+  * test with type error detects no type error (exit code 0)
+  * test without type error detects a type error (exit code 1)
+* `[M]`: Test case crashed; Memory (code 137)
+* `[T]`: Test case crashed; Time (code 124)
+* `[!]`: Unknown error code (code ?)
+  * dialyzer warnings (code 2) count currently as unknown
+
 
 
 # Setup
@@ -22,10 +46,6 @@ The test suite is currently run with the following limitations
 
 * memory limit of 1Gb (enforced with `systemd-run`)
 * time limit of 10s per module (enforced with `timeout`)
-
-# Resources
-
-* Some test cases are from the Gradualizer test suite
 
 
 # Interesting discussions
