@@ -11,6 +11,7 @@ The tools currently included are:
 The test suites currently included are:
 
 * [Gradualizer](https://github.com/josefs/Gradualizer)
+  * Commit: [01ea62e](https://github.com/josefs/Gradualizer/commit/01ea62e117d99eb163971f793433e4033b104137)
 * Etylizer
 
 
@@ -58,6 +59,7 @@ The test suite is currently run with the following limitations
 
 # Interesting discussions
 
+* https://github.com/josefs/Gradualizer/issues/428
 * https://github.com/josefs/Gradualizer/issues/433
 * https://github.com/josefs/Gradualizer/issues/405
 * https://github.com/erlang/otp/issues/6333
