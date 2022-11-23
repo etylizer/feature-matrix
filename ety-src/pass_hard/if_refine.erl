@@ -4,11 +4,10 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
--spec bar(integer()) -> 0..10.
+-spec bar(integer() | atom()) -> 0..10.
 bar(X) ->
-    if X < 0 -> 0;
-       X > 10 -> 10;
-       true -> X
+    if X when is_atom(X) -> 10;
+       X when is_integer(X) -> X
     end.
 
 my_test() ->
