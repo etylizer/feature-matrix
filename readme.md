@@ -19,6 +19,16 @@ Roadmap:
 
 * [ ] Eqwalizer
 * [ ] Eqwalizer test cases
+* [ ] Dialyzer test cases
+
+# Run
+
+Run with `./matrix`
+
+Dependencies:
+
+* `perl`
+* `erl`
 
 # Result Meaning
 
@@ -44,8 +54,8 @@ The benchmark assumes the following:
 
 The test suite is currently run with the following limitations
 
-* memory limit of 1Gb (enforced with `systemd-run`)
-* time limit of 10s per module (enforced with `timeout`)
+* memory limit of 1Gb
+* time limit of 10s per module
 
 # Problems
 

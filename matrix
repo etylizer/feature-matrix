@@ -7,7 +7,7 @@ DIALYZER_OPTS=" -Wno_improper_lists"
 
 # time limit and memory limit
 function limitrun {
-  timeout 2s systemd-run --scope -p MemoryMax=1024M --user $@
+  ./timeout -t 10 -s 1000000 $@
 }
 
 function result {
@@ -45,7 +45,7 @@ function exception {
 }
 
 function ety {
-  limitrun ./ety $1 1> /dev/null 2> /dev/null
+  limitrun ./ety $1 > /dev/null 2> /dev/null
   R2=$?
   if [ $2 = "fail" ]; then
     fail $R2 $1
@@ -108,7 +108,9 @@ function eqwalizer {
 
 
 #allModules=(cdialyzer gradualizer eqwalizer ety)
-allModules=(cdialyzer gradualizer ety)
+#allModules=(cdialyzer gradualizer ety)
+allModules=(ety)
+
 
 testSuites=(ety gradualizer)
 
@@ -120,15 +122,15 @@ for checkerundertest in ${allModules[@]}; do
   echo $checkerundertest
   for suite in ${testSuites[@]}; do
     for testcase in $suite-src/fail*/*.erl ; do
-      "$checkerundertest" "$testcase" fail >> "$checkerundertest-$suite-fail"
-      tail -1 "$checkerundertest-$suite-fail"
+      ("$checkerundertest" "$testcase" fail) >> "f-$checkerundertest-$suite-fail"
+      tail -1 "f-$checkerundertest-$suite-fail"
     done
   done
 
   for suite in ${testSuites[@]}; do
     for testcase in $suite-src/pass*/*.erl ; do
-      $checkerundertest $testcase pass >> "$checkerundertest-$suite-pass"
-      tail -1 "$checkerundertest-$suite-pass"
+      ("$checkerundertest" "$testcase" pass) >> "f-$checkerundertest-$suite-pass"
+      tail -1 "f-$checkerundertest-$suite-pass"
     done
   done
 done

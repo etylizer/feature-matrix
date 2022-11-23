@@ -2,6 +2,11 @@
 
 -compile([export_all, nowarn_export_all]).
 
+
+% andalso either 
+% true & A -> A
+% false & _ -> false
+
 -spec f1() -> boolean().
 f1() ->
   true andalso g1().
