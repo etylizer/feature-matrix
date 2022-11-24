@@ -1,0 +1,69 @@
+#!scraper
+#
+# cut with
+# ./gen.yml | sort | cut -d ' ' -f 2-
+start:
+  - f: let
+    put: prio
+    value: 
+      cdialyzer-ety-pass: "01"
+      ety-ety-pass: "02"
+      gradualizer-ety-pass: "03"
+      cdialyzer-ety-fail: "04"
+      ety-ety-fail: "05"
+      gradualizer-ety-fail: "06"
+      cdialyzer-gradualizer-pass: "07"
+      ety-gradualizer-pass: "08"
+      gradualizer-gradualizer-pass: "09"
+      cdialyzer-gradualizer-fail: "10"
+      ety-gradualizer-fail: "11"
+      gradualizer-gradualizer-fail: "12"
+
+  - f: map
+    list: [ety, gradualizer]
+    putElement: suite
+
+  - f: map
+    list: [fail, pass]
+    putElement: category
+
+  - f: map
+    list: [cdialyzer, ety, gradualizer]
+    putElement: tool
+
+  - f: let
+    put: file
+    value: "results/latest/f-{tool}-{suite}-{category}"
+
+  - f: ReadFile
+    inputFile: "{file}"
+    output: body
+
+  - f: Regex
+    regex: "\\[X\\]"
+    content: "{body}"
+    output: content
+  - f: ListLength
+    in: "{content}"
+    out: fail
+
+  - f: Regex
+    regex: "\\[[!MT]\\]"
+    content: "{body}"
+    output: content2
+  - f: ListLength
+    in: "{content2}"
+    out: runtime
+
+  - f: Regex
+    regex: "\\[O\\]"
+    content: "{body}"
+    output: content3
+  - f: ListLength
+    in: "{content3}"
+    out: ok
+
+  - f: Output
+    output: "{prio@{tool}-{suite}-{category}} {fail} {runtime} {ok}"
+
+
