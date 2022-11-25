@@ -1,4 +1,5 @@
 -module(remote_types_pass).
+-compile([export_all, nowarn_export_all]).
 
 -type options() :: proplists:proplist().
 

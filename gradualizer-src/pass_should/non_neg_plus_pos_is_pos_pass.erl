@@ -1,6 +1,6 @@
 -module(non_neg_plus_pos_is_pos_pass).
 
--export([f/1]).
+-export([f/1, g/1, h/1]).
 
 -spec f(non_neg_integer()) -> pos_integer().
 f(N) ->

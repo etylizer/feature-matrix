@@ -22,12 +22,6 @@ return_fun_intersection() -> fun number/1.
                                       fun((1..3) -> integer()).
 return_fun_union_intersection() -> fun number/1.
 
-%% By default inferring type from expressions with no spec is disabled.
-%% So the type of `fun no_spec/0' is `any()' which is a subtype of
-%% `integer()'.
--spec return_fun_no_spec() -> integer().
-return_fun_no_spec() -> fun no_spec/0.
-
 -spec nil() -> [].
 nil() -> [].
 
@@ -35,4 +29,3 @@ nil() -> [].
             (float()) -> float().
 number(N) -> N.
 
-no_spec() -> ok.

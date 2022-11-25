@@ -108,8 +108,8 @@ function eqwalizer {
 
 
 #allModules=(cdialyzer gradualizer eqwalizer ety)
-#allModules=(cdialyzer gradualizer ety)
-allModules=(ety)
+allModules=(cdialyzer gradualizer ety)
+#allModules=(ety)
 
 
 testSuites=(ety gradualizer)
