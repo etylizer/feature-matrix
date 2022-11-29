@@ -5,6 +5,8 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
+% TODO what to do with when subtype restriction?
+
 -spec last_day_of_the_month(Year, Month) -> LastDay when
     Year :: non_neg_integer(),
     Month :: 1..12,

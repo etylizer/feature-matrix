@@ -1,0 +1,25 @@
+#!/usr/bin/env scraper
+start:
+  - f: SingleInput
+    put: raw
+  - f: JsonStringToObject
+    jsonString: "{raw}"
+    jsonObject: i
+  - f: Output
+    output: |-
+      \begin\{tabular\}\{ll|lll|lll|lll|\}
+        \cline\{3-11\}
+        &               & \multicolumn\{3\}\{l|\}\{Dialyzer\}                                                                                                                        & \multicolumn\{3\}\{l|\}\{Etylizer\}                                                                                                                         & \multicolumn\{3\}\{l|\}\{Gradualizer\}                                                                                               \\ \hline
+        \multicolumn\{1\}\{|l\}\{\textbf\{Ety.\}\}    & \textbf\{pass\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^0]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}[i^1]\} & \cellcolor\\[HTML\\]\{9AFF99\}\{\color\\[HTML\\]\{000000\} [i^2]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^3]\}  & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}\{\color\\[HTML\\]\{000000\} [i^4]\}\}  & \cellcolor\\[HTML\\]\{9AFF99\}[i^5] & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^6]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}[i^7]\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^8]  \\ \cline\{2-11\} 
+        \multicolumn\{1\}\{|l\}\{\textbf\{Suite\}\}       & \textbf\{fail\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^9]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}[i^10]\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^11]                        & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^12]\}  
+        
+        & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}\{\color\\[HTML\\]\{000000\} [i^13]\}\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^14] & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^15]\}  & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}[i^16]\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^17]  \\ \hline
+        
+        \multicolumn\{1\}\{|l\}\{\textbf\{Grad.\}\} & \textbf\{pass\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^18]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}[i^19]\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^20]                       & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^22]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}\{\color\\[HTML\\]\{000000\} [i^22]\}\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^23] & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^24]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}[i^25]\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^26] \\ \cline\{2-11\} 
+        
+        \multicolumn\{1\}\{|l\}\{\textbf\{Suite\}\}       & \textbf\{fail\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^27]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}[i^28]\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^29]                        & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^30]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}\{\color\\[HTML\\]\{000000\} [i^31]\}\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^32] & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FD6864\}[i^33]\} & \multicolumn\{1\}\{l|\}\{\cellcolor\\[HTML\\]\{FFCE93\}[i^34]\} & \cellcolor\\[HTML\\]\{9AFF99\}[i^35] \\ \hline
+      \end\{tabular\}
+
+
+
+

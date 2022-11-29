@@ -492,13 +492,17 @@ sub get_patterns
 sub limits_exceeded
 {
 	if (defined $timelimit && $timeinfo->{total} > $timelimit){
+    # HACK kill all lost children processes
+    `/bin/bash ./fix`;
     exit 124;
 	}elsif (defined $ticklimit && $kill_stale && $timeinfo->{ticks_stale} > $ticklimit) {
 	# Sometimes the controlling process may inherently hang up.  Then we don't interrupt it.
 		return 'HANGUP';
 	}elsif (defined $memlimit && $meminfo > $memlimit){
+    `/bin/bash ./fix`;
     exit 137;
 	}elsif (defined $memlimit_rss && $meminfo_rss > $memlimit_rss){
+    `/bin/bash ./fix`;
     exit 137;
 	}
 	return undef;

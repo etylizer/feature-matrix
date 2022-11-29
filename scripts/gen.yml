@@ -1,7 +1,4 @@
-#!scraper
-#
-# cut with
-# ./gen.yml | sort | cut -d ' ' -f 2-
+#!/usr/bin/env scraper
 start:
   - f: let
     put: prio
@@ -65,5 +62,4 @@ start:
 
   - f: Output
     output: "{prio@{tool}-{suite}-{category}} {fail} {runtime} {ok}"
-
 

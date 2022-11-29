@@ -19,9 +19,9 @@
 [O] ety-src/pass_easy/float_01.erl
 [O] ety-src/pass_easy/float_02.erl
 [O] ety-src/pass_easy/float_03.erl
-[O] ety-src/pass_easy/foo.erl
 [O] ety-src/pass_easy/foo2.erl
 [O] ety-src/pass_easy/foo3.erl
+[O] ety-src/pass_easy/foo.erl
 [O] ety-src/pass_easy/fun_01.erl
 [O] ety-src/pass_easy/fun_03.erl
 [O] ety-src/pass_easy/fun_05.erl
@@ -60,9 +60,8 @@
 [O] ety-src/pass_hard/if_refine.erl
 [O] ety-src/pass_hard/match.erl
 [O] ety-src/pass_hard/my_and.erl
-[O] ety-src/pass_hard/paper_ifl.erl
 [O] ety-src/pass_hard/pattern_refine.erl
 [O] ety-src/pass_hard/recursive.erl
 [O] ety-src/pass_hard/typecase.erl
-[O] ety-src/pass_hard/union.erl
 [O] ety-src/pass_hard/union_distrib.erl
+[O] ety-src/pass_hard/union.erl
