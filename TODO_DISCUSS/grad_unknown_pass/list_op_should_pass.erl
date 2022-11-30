@@ -1,15 +1,6 @@
 -module(list_op_should_pass).
 
--export([nil_concat_op_elem_gives_elem/0,
-         nil_concat_fun_elem_gives_elem/0,
-         nonempty1_concat_op_elem_gives_improper/0,
-         nonempty1_concat_fun_elem_gives_improper/0,
-         nonempty2_concat_op_elem_gives_improper/0,
-         nonempty2_concat_fun_elem_gives_improper/0,
-         nil_concat_op_nonempty_gives_proper/0,
-         nil_concat_fun_nonempty_gives_proper/0,
-         nonempty_concat_op_nonempty_gives_proper/0,
-         nonempty_concat_fun_nonempty_gives_proper/0]).
+-compile([export_all, nowarn_export_all]).
 
 -spec nil_concat_op_elem_gives_elem() -> b.
 nil_concat_op_elem_gives_elem() ->

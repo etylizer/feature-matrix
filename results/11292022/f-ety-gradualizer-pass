@@ -9,7 +9,7 @@
 [X] gradualizer-src/pass_problem/list_op_should_pass.erl
 [O] gradualizer-src/pass_problem/list_tail.erl
 [!] gradualizer-src/pass_problem/map_union.erl
-[X] gradualizer-src/pass_problem/map_update2.erl
+[!] gradualizer-src/pass_problem/map_update2.erl
 [!] gradualizer-src/pass_problem/recursive_types.erl
 [O] gradualizer-src/pass_problem/refine_bound_var_on_mismatch.erl
 [!] gradualizer-src/pass_problem/refine_list_tail.erl
@@ -37,9 +37,8 @@
 [O] gradualizer-src/pass_should/fun_spec.erl
 [!] gradualizer-src/pass_should/guard.erl
 [O] gradualizer-src/pass_should/if_expr.erl
-[X] gradualizer-src/pass_should/int.erl
+[!] gradualizer-src/pass_should/int.erl
 [O] gradualizer-src/pass_should/intersection_pass.erl
-[X] gradualizer-src/pass_should/intersection_with_any_pass.erl
 [!] gradualizer-src/pass_should/iodata.erl
 [!] gradualizer-src/pass_should/issue131.erl
 [!] gradualizer-src/pass_should/lc.erl
