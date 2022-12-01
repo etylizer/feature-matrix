@@ -13,6 +13,7 @@ fac(I) ->
 
 %% Documents expected behaviour that named_fun gets type any() when
 %% infer is off in do_type_check_expr.
+%% TYPO???
 -spec sum([integer()]) -> integer().
 sum(Ints) ->
     F = fun Sum(Acc, [Int | Rest]) ->
