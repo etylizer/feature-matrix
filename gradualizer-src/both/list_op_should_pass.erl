@@ -2,6 +2,7 @@
 
 -compile([export_all, nowarn_export_all]).
 
+
 -spec nil_concat_op_elem_gives_elem() -> b.
 nil_concat_op_elem_gives_elem() ->
     [] ++ b.
