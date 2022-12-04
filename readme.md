@@ -54,7 +54,7 @@ The benchmark assumes the following:
 
 The test suite is currently run with the following limitations
 
-* memory limit of 1Gb
+* memory limit of 6Gb
 * time limit of 10s per module
 
 # Problems

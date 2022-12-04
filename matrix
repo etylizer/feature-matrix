@@ -7,7 +7,7 @@ DIALYZER_OPTS=" -Wno_improper_lists"
 
 # time limit and memory limit
 function limitrun {
-  ./timeout -t 100 -s 6000000 $@
+  ./timeout -t 10 -s 6000000 $@
 }
 
 function result {
