@@ -8,7 +8,7 @@
 -spec foo([{a|b, a|b}]) -> boolean().
 foo(Xs) ->
     lists_any(fun ({a, _X}) -> false;
-                  ({a, a})  -> true; %% can never match
+                  ({a, a})  -> true; %% can never match % found by the compiler?
                   ({b, _})  -> true
               end,
               Xs).

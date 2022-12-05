@@ -135,3 +135,9 @@ for checkerundertest in ${allModules[@]}; do
   done
 done
 
+Name=$(date +"%S-%M-%H-%m-%d-%Y")
+mkdir -p results/$Name
+rm results/latest
+ln -s $Name results/latest
+mv f-* results/$Name
+

@@ -5,6 +5,9 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
+% dialyzer ignores overlapping domains and throws and error, we don't want that
+-dialyzer({no_contracts, map_even/1}).
+
 % From "Castagna et al, Polymorphic Functions with Set-Theoretic Types, Part 1"
 
 -spec my_map_infer(fun((A) -> B), list(A)) -> list(B).

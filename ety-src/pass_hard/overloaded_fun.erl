@@ -9,6 +9,8 @@
 % ast_erl:guard() into ast:guard(), where guards are a subset of expressions.
 % cduce typechecks this example successfully, see design/examples-cduce/overloaded_fun.cd
 % gradualizer cannot handle this example.
+% dialyzer ignores overlapping domains and throws and error, we don't want that
+-dialyzer(no_contracts).
 -spec foo(integer()) -> integer();
           (1|2) -> (1|2).
 foo(X) ->
