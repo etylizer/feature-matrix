@@ -1,6 +1,6 @@
 -module(catch_expr_pass).
 
--export([foo/1, g/0]).
+-export([foo/1]).
 
 -spec foo(ok) -> ok.
 foo(X) ->
