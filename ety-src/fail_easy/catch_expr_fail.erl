@@ -1,6 +1,6 @@
 -module(catch_expr_pass).
 
--export([foo/1]).
+-export([foo/1, g/0]).
 
 -spec foo(ok) -> ok.
 foo(X) ->
@@ -10,3 +10,7 @@ foo(X) ->
 
 -spec bar(any()) -> any().
 bar(X) -> 2.
+
+%-spec g() -> ok.
+%g() ->
+%  ok = foo(ok).

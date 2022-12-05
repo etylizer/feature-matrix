@@ -3,6 +3,8 @@
 -compile(export_all).
 -compile(nowarn_export_all).
 
+% dialyzer ignores overlapping domains and throws and error, we don't want that
+-dialyzer(no_contracts).
 -spec my_filtermap(fun((T) -> boolean()), [T]) -> [T]
               ; (fun((T) -> {true, U} | false), [T]) -> [U]
               ; (fun((T) -> {true, U} | boolean()), [T]) -> [T | U].
