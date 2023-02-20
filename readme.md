@@ -13,6 +13,7 @@ The test suites currently included are:
 * [Gradualizer](https://github.com/josefs/Gradualizer)
   * Commit: [01ea62e](https://github.com/josefs/Gradualizer/commit/01ea62e117d99eb163971f793433e4033b104137)
 * Etylizer
+  * Tag: `ifl2022-benchmarks`
 
 
 Roadmap:
