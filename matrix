@@ -16,6 +16,8 @@ function result {
     echo "[O] $R" 
   elif [ $1 -eq 1 ]; then
     echo "[X] $R" 
+  elif [ $1 -eq 5 ]; then
+    echo "[-] $R" 
   elif [ $1 -eq 137 ]; then
     echo "[M] $R" 
   elif [ $1 -eq 124 ]; then
@@ -31,6 +33,8 @@ function fail {
     echo "[X] $R"
   elif [ $1 -eq 1 ]; then
     echo "[O] $R" 
+  elif [ $1 -eq 5 ]; then
+    echo "[-] $R" 
   elif [ $1 -eq 137 ]; then
     echo "[M] $R" 
   elif [ $1 -eq 124 ]; then

@@ -39,6 +39,7 @@ Dependencies:
 * `[X]`: Test case has unexpected result; 
   * test with type error detects no type error (exit code 0)
   * test without type error detects a type error (exit code 1; error code 2 for dialyzer)
+* `[-]`: Test case contains unimplemented features (code 5)
 * `[M]`: Test case crashed; Memory (code 137)
 * `[T]`: Test case crashed; Time (code 124)
 * `[!]`: Unknown error code (code ?)
