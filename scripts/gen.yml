@@ -45,21 +45,45 @@ start:
     out: fail
 
   - f: Regex
-    regex: "\\[[!MT]\\]"
+    regex: "\\[[!]\\]"
     content: "{body}"
     output: content2
   - f: ListLength
     in: "{content2}"
-    out: runtime
+    out: crash
 
   - f: Regex
-    regex: "\\[O\\]"
+    regex: "\\[[T]\\]"
     content: "{body}"
     output: content3
   - f: ListLength
     in: "{content3}"
+    out: timeout
+
+  - f: Regex
+    regex: "\\[[M]\\]"
+    content: "{body}"
+    output: content4
+  - f: ListLength
+    in: "{content4}"
+    out: memory
+
+  - f: Regex
+    regex: "\\[[-]\\]"
+    content: "{body}"
+    output: content5
+  - f: ListLength
+    in: "{content5}"
+    out: notimplemented
+
+  - f: Regex
+    regex: "\\[O\\]"
+    content: "{body}"
+    output: content6
+  - f: ListLength
+    in: "{content6}"
     out: ok
 
   - f: Output
-    output: "{prio@{tool}-{suite}-{category}} {fail} {runtime} {ok}"
+    output: "{prio@{tool}-{suite}-{category}} {tool} {suite} {category} {ok} {fail} {crash} {notimplemented} {timeout} {memory}"
 
