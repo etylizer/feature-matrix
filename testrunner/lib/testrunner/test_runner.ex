@@ -1,21 +1,28 @@
 defmodule TestRunner do
-  @spec run_tests({atom(), String.t()}, [TestCollector.test_suite()]) :: any()
+  @type test_result() :: :pass | :fail | :not_implemented | :timeout | :crash_memory | :unknown
+  @type file_result() :: %{file: String.t(), result: test_result()}
+  @type category_result() :: %{category: String.t(), results: [file_result()]}
+  @type suite_result() :: %{test_suite: String.t(), results: [category_result()]}
+
+  @spec run_tests({atom(), String.t()}, [TestCollector.test_suite()]) :: [suite_result()]
   def run_tests(executable, tests) do
-    Enum.map(tests, fn test_suite ->
-      run_suite_tests(executable, test_suite)
+    Enum.map(tests, fn test_suite = %{suite: suite_name} ->
+      %{test_suite: suite_name, results: run_suite_tests(executable, test_suite)}
     end)
+#    |> Map.new(fn %{test_suite: test_suite, results: results} -> {test_suite, results} end)
   end
 
-  @spec run_suite_tests({atom(), String.t()}, TestCollector.test_suite()) :: any()
+  @spec run_suite_tests({atom(), String.t()}, TestCollector.test_suite()) :: [category_result()]
   defp run_suite_tests(executable, %{suite: suite_name, test_categories: test_categories}) do
     IO.inspect({:suite, suite_name})
 
-    Enum.each(test_categories, fn test_category ->
+    Enum.map(test_categories, fn test_category ->
       run_category_tests(executable, test_category)
     end)
+#    |> Map.new(fn %{category: category, results: results} -> {category, results} end)
   end
 
-  @spec run_category_tests({atom(), String.t()}, TestCollector.test_category()) :: any()
+  @spec run_category_tests({atom(), String.t()}, TestCollector.test_category()) :: category_result()
   defp run_category_tests(executable, %{
          category: category_name,
          expected_result: expected_result,
@@ -23,52 +30,41 @@ defmodule TestRunner do
        }) do
     IO.inspect({:category, category_name})
 
-    Enum.each(files, fn test_file ->
-      result = run_test(executable, expected_result, test_file)
-      IO.inspect({test_file, result})
-      result
-    end)
+    results =
+      Enum.map(files, fn test_file ->
+        result = run_test(executable, expected_result, test_file)
+        IO.inspect({test_file, result})
+        %{file: test_file, result: result}
+      end)
+
+    %{category: category_name, results: results}
   end
 
+  @spec run_test({atom(), String.t()}, atom(), String.t()) :: test_result()
   defp run_test(executable, expected_result, test_file) do
-    proc = spawn_process(executable, test_file)
-    result = Porcelain.Process.await(proc, 10_000)
-
-    case result do
-      {:ok, result} ->
-        evaluate_result(result, expected_result, executable)
-
-      {:error, :timeout} ->
-        IO.puts("Timeout: #{test_file}")
-        Porcelain.Process.stop(proc)
-        :timeout
-
-      {:error, _} ->
-        IO.puts("Unspecified process error: #{test_file}")
-        :error
-    end
+    args = build_args(executable, test_file)
+    {_output, exit_code} = System.cmd("timeout", ["10" | args], stderr_to_stdout: true)
+    evaluate_result(exit_code, expected_result, executable)
   end
 
-  defp spawn_process({type, path}, test_file) do
+  @spec build_args({atom(), String.t()}, String.t()) :: [String.t()]
+  defp build_args({type, path}, test_file) do
     case type do
-      :dialyzer -> Porcelain.spawn(path, ["--src", test_file])
-      _ -> Porcelain.spawn(path, [test_file])
+      :dialyzer -> [path, "--src", test_file]
+      _ -> [path, test_file]
     end
   end
 
-  defp evaluate_result(
-         result = %Porcelain.Result{status: status},
-         expected_result,
-         {executable_type, _}
-       ) do
-    effective_status =
-      case status do
+  @spec evaluate_result(integer(), atom(), {atom(), String.t()}) :: test_result()
+  defp evaluate_result(exit_code, expected_result, {executable_type, _}) do
+    effective_exit_code =
+      case exit_code do
         1 when executable_type == :dialyzer -> 2
         2 when executable_type == :dialyzer -> 1
-        _ -> status
+        _ -> exit_code
       end
 
-    case effective_status do
+    case effective_exit_code do
       0 when expected_result == :pass -> :pass
       0 when expected_result == :fail -> :fail
       1 when expected_result == :pass -> :fail
@@ -78,6 +74,7 @@ defmodule TestRunner do
       0 when expected_result == :both -> :pass
       1 when expected_result == :both -> :pass
       5 -> :not_implemented
+      124 -> :timeout
       137 -> :crash_memory
       _ -> :unknown
     end
