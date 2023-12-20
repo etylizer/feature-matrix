@@ -1,21 +1,23 @@
 # Testrunner
 
-**TODO: Add description**
+An elixir application used to run various erlang type checkers on a set of tests.
 
-## Installation
+## Requirements
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `testrunner` to your list of dependencies in `mix.exs`:
+- Elixir 1.15.0 or higher
+- A linux system where the `timeout` command is available
+  - Windows is not supported out of the box, however, if you can provide a windows-compatible `timeout` command, it should work
 
-```elixir
-def deps do
-  [
-    {:testrunner, "~> 0.1.0"}
-  ]
-end
+## Build and Run
+
+To build the project and generate an executable, run:
+```bash
+mix escript.build
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/testrunner>.
+For development, use:
+```bash
+mix run mix run -e Testrunner.Cli.main -- --suites <test-suite-paths>
+```
 
+The test suite paths should be relative to the current working directory. Multiple test suites can be separated by a space.
