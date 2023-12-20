@@ -30,12 +30,13 @@ defmodule TestRunner do
        }) do
     IO.inspect({:category, category_name})
 
-    results =
-      Enum.map(files, fn test_file ->
-        result = run_test(executable, expected_result, test_file)
-        IO.inspect({test_file, result})
-        %{file: test_file, result: result}
-      end)
+    results = Flow.from_enumerable(files, min_demand: 1, max_demand: 2)
+    |> Flow.map(fn test_file ->
+      test_result = run_test(executable, expected_result, test_file)
+      IO.inspect({test_file, test_result})
+      %{file: test_file, result: test_result}
+    end)
+    |> Enum.to_list()
 
     %{category: category_name, results: results}
   end
