@@ -13,10 +13,6 @@ defmodule Testrunner.Cli do
         %{executable: exec_type, test_suites: TestRunner.run_tests(executable, test_data)}
     end)
 
-    File.open!("test_results.txt", [:write], fn file ->
-      IO.inspect(file, test_results, [])
-    end)
-
     json = Jason.encode!(test_results, [pretty: true])
     File.write("test_results.json", json)
   end
