@@ -1,7 +1,13 @@
 defmodule Testrunner.Cli do
-  def main(args \\ []) do
-    test_data = TestCollector.collect_tests(["../ety-src", "../gradualizer-src"])
-#    test_data = TestCollector.collect_tests(["../test-src"])
+  def main(_args \\ []) do
+    args = System.argv()
+    test_suites = case args do
+      ["--suites" | test_suites] -> test_suites
+      _ -> ["../ety-src", "../gradualizer-src"] # default values for testing
+    end
+
+    test_data = TestCollector.collect_tests(test_suites)
+
     executables = [
       {:dialyzer, "dialyzer"},
       {:etylizer, "../ety"},
