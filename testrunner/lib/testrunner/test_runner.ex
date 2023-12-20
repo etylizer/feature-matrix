@@ -1,13 +1,13 @@
 defmodule TestRunner do
   @type test_result() :: :pass | :fail | :not_implemented | :timeout | :crash_memory | :unknown
   @type file_result() :: %{file: String.t(), result: test_result()}
-  @type category_result() :: %{category: String.t(), results: [file_result()]}
-  @type suite_result() :: %{test_suite: String.t(), results: [category_result()]}
+  @type category_result() :: %{category: String.t(), actual_time: integer(), total_time: integer(), results: [file_result()]}
+  @type suite_result() :: %{test_suite: String.t(), categories: [category_result()]}
 
   @spec run_tests({atom(), String.t()}, [TestCollector.test_suite()]) :: [suite_result()]
   def run_tests(executable, tests) do
     Enum.map(tests, fn test_suite = %{suite: suite_name} ->
-      %{test_suite: suite_name, results: run_suite_tests(executable, test_suite)}
+      %{test_suite: suite_name, categories: run_suite_tests(executable, test_suite)}
     end)
 #    |> Map.new(fn %{test_suite: test_suite, results: results} -> {test_suite, results} end)
   end
@@ -30,22 +30,29 @@ defmodule TestRunner do
        }) do
     IO.inspect({:category, category_name})
 
+    category_start_time = :os.system_time(:millisecond)
     results = Flow.from_enumerable(files, min_demand: 1, max_demand: 2)
     |> Flow.map(fn test_file ->
-      test_result = run_test(executable, expected_result, test_file)
+      {test_result, time_diff} = run_test(executable, expected_result, test_file)
       IO.inspect({test_file, test_result})
-      %{file: test_file, result: test_result}
+      %{file: test_file, time: time_diff, result: test_result}
     end)
     |> Enum.to_list()
+    category_end_time = :os.system_time(:millisecond)
 
-    %{category: category_name, results: results}
+    total_time = Enum.reduce(results, 0, fn %{time: time}, sum -> sum + time end)
+    actual_time = category_end_time - category_start_time
+    %{category: category_name, results: results, actual_time: actual_time, total_time: total_time}
   end
 
-  @spec run_test({atom(), String.t()}, atom(), String.t()) :: test_result()
+  @spec run_test({atom(), String.t()}, atom(), String.t()) :: {test_result(), integer()}
   defp run_test(executable, expected_result, test_file) do
     args = build_args(executable, test_file)
+    start_time = :os.system_time(:millisecond)
     {_output, exit_code} = System.cmd("timeout", ["10" | args], stderr_to_stdout: true)
-    evaluate_result(exit_code, expected_result, executable)
+    end_time = :os.system_time(:millisecond)
+    time_diff = end_time - start_time
+    {evaluate_result(exit_code, expected_result, executable), time_diff}
   end
 
   @spec build_args({atom(), String.t()}, String.t()) :: [String.t()]
