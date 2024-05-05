@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ps -ef | grep 'ety' | grep -v perl | grep -v grep | awk '{print $2}' | xargs -r kill -9
+ps -ef | grep 'ety' | grep -v perl | grep -v grep | grep -v testrunner | awk '{print $2}' | xargs -r kill -9
 

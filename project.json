@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "ety-test",
+      "dir": ".",
+      "src_dirs": ["ety-src"]
+    },
+    {
+      "name": "gradualizer-test",
+      "dir": ".",
+      "src_dirs": ["gradualizer-src"]
+    }
+  ]
+}
